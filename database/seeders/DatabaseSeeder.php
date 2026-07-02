@@ -10,12 +10,12 @@ class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
 
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+public function run(): void
     {
-        $this->call(RoleSeeder::class);
+        $this->call([
+            RoleSeeder::class,
+            DepartmentSeeder::class,
+        ]);
 
         // Create test user if it doesn't already exist
         User::firstOrCreate(
@@ -26,4 +26,5 @@ class DatabaseSeeder extends Seeder
             ]
         );
     }
+
 }
