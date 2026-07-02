@@ -2,6 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartmentController;
+
+Route::resource('departments', DepartmentController::class);
+
+Route::get('/departments-test', function () {
+    $departments = \App\Models\Department::all();
+    return view('departments.index', ['departments' => $departments]);
+});
 
 Route::get('/', function () {
     return view('welcome');
