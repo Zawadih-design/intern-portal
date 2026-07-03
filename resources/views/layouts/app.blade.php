@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Intern Management Portal') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,6 +13,8 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -27,10 +29,22 @@
                 </header>
             @endisset
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+           <!-- Page Content -->
+<div class="flex">
+
+    {{-- Sidebar --}}
+    @include('layouts.sidebar')
+
+    {{-- Main Content --}}
+    <main class="flex-1 p-8 bg-gray-100 min-h-screen">
+
+        {{ $slot ?? '' }}
+
+        @yield('content')
+
+    </main>
+
+</div>
         </div>
     </body>
 </html>

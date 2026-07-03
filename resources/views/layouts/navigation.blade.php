@@ -15,6 +15,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
+                        {{ __('Departments') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('supervisors.index')" :active="request()->routeIs('supervisors.*')">
+                        {{ __('Supervisors') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('universities.index')" :active="request()->routeIs('universities.*')">
+                        {{ __('Universities') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('interns.index')" :active="request()->routeIs('interns.*')">
+                        {{ __('Interns') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +81,18 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.*')">
+                {{ __('Departments') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('supervisors.index')" :active="request()->routeIs('supervisors.*')">
+                {{ __('Supervisors') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('universities.index')" :active="request()->routeIs('universities.*')">
+                {{ __('Universities') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('interns.index')" :active="request()->routeIs('interns.*')">
+                {{ __('Interns') }}
             </x-responsive-nav-link>
         </div>
 

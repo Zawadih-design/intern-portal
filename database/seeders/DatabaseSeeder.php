@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             DepartmentSeeder::class,
+            UniversitySeeder::class,
         ]);
 
         // Create test user if it doesn't already exist
