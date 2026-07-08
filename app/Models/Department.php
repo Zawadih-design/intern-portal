@@ -12,4 +12,8 @@ class Department extends Model
     {
         return $this->hasMany(Intern::class);
     }
+    public function tasks()
+{
+    return $this->hasMany(Task::class);
+}
 }

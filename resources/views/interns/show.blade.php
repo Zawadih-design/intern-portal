@@ -16,7 +16,7 @@
 
     <p><strong>Department:</strong> {{ $intern->department->name }}</p>
 
-    <p><strong>Supervisor:</strong> {{ $intern->supervisor->user->name }}</p>
+    <p><strong>Supervisor:</strong> {{ $intern->supervisor?->user?->name ?? 'N/A' }}</p>
 
     <p><strong>Programme:</strong> {{ $intern->programme }}</p>
 

@@ -24,7 +24,7 @@
 
             <p>Department: {{ $intern->department->name }}</p>
 
-            <p>Supervisor: {{ $intern->supervisor->user->name }}</p>
+            <p>Supervisor: {{ $intern->supervisor?->user?->name ?? 'N/A' }}</p>
 
             <p>Student No: {{ $intern->student_number }}</p>
 

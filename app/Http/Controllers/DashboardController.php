@@ -6,6 +6,7 @@ use App\Models\Department;
 use App\Models\Intern;
 use App\Models\Supervisor;
 use App\Models\University;
+use App\Models\ActivityLog;
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,9 @@ $departments = Department::withCount('interns')->get();
             'totalUniversities' => University::count(),
             'totalSupervisors' => Supervisor::count(),
             'departments' => $departments,
+            'recentActivities' => ActivityLog::latest()
+        ->take(5)
+        ->get(),
         ]);
     }
 }

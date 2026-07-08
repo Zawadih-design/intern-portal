@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
+use App\Models\Intern;
+use App\Observers\InternObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,8 +19,8 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
-    {
-        Schema::defaultStringLength(191);
-    }
+   public function boot(): void
+{
+    Intern::observe(InternObserver::class);
+}
 }

@@ -82,7 +82,52 @@
                 </a>
 
             </div>
+<div class="bg-white rounded-xl shadow p-6">
 
+<h2 class="text-lg font-semibold mb-4">
+Recent Activity
+</h2>
+
+
+<div class="space-y-4">
+
+
+@forelse($recentActivities as $activity)
+
+<div class="flex items-start gap-3">
+
+<div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+
+
+<div>
+
+<p class="text-sm text-gray-800">
+{{ $activity->description }}
+</p>
+
+
+<p class="text-xs text-gray-400">
+{{ $activity->created_at->diffForHumans() }}
+</p>
+
+
+</div>
+
+</div>
+
+
+@empty
+
+<p class="text-gray-400">
+No activity yet
+</p>
+
+@endforelse
+
+
+</div>
+
+</div>
         </div>
 
     </div>

@@ -27,4 +27,9 @@ class Supervisor extends Model
     {
         return $this->belongsTo(Department::class);
     }
+// Relationship: Supervisor has many Tasks
+    public function tasks()
+{
+    return $this->hasMany(Task::class);
+}
 }
