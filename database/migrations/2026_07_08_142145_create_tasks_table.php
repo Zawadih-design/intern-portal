@@ -34,11 +34,12 @@ public function up(): void
         ])->default('Medium');
 
         $table->enum('status', [
-            'Pending',
-            'In Progress',
-            'Completed',
-            'Approved'
-        ])->default('Pending');
+    'Pending',
+    'In Progress',
+    'Submitted',
+    'Approved',
+    'Completed'
+])->default('Pending');
 
         $table->date('deadline');
 

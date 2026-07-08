@@ -20,13 +20,13 @@
 
         <div>
 
-            <h3>{{ $supervisor->user->name }}</h3>
+            <h3>{{ $supervisor->user->name ?? 'N/A' }}</h3>
 
-            <p>Department: {{ $supervisor->department->name }}</p>
+            <p>Department: {{ $supervisor->department->name ?? 'N/A' }}</p>
 
-            <p>Position: {{ $supervisor->position }}</p>
+            <p>Position: {{ $supervisor->position ?? 'N/A' }}</p>
 
-            <p>Phone: {{ $supervisor->phone }}</p>
+            <p>Phone: {{ $supervisor->phone ?? 'N/A' }}</p>
 
             <form method="POST" action="{{ route('supervisors.destroy', $supervisor->id) }}">
                 @csrf

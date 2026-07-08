@@ -12,7 +12,7 @@
         <label>User</label>
         <select name="user_id">
             @foreach($users as $user)
-                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                <option value="{{ $user->id }}">{{ $user->name ?? 'N/A' }}</option>
             @endforeach
         </select>
 
@@ -21,7 +21,7 @@
         <label>University</label>
         <select name="university_id">
             @foreach($universities as $uni)
-                <option value="{{ $uni->id }}">{{ $uni->name }}</option>
+                <option value="{{ $uni->id }}">{{ $uni->name ?? 'N/A' }}</option>
             @endforeach
         </select>
 
@@ -30,7 +30,7 @@
         <label>Department</label>
         <select name="department_id">
             @foreach($departments as $dep)
-                <option value="{{ $dep->id }}">{{ $dep->name }}</option>
+                <option value="{{ $dep->id }}">{{ $dep->name ?? 'N/A' }}</option>
             @endforeach
         </select>
 
@@ -39,7 +39,7 @@
         <label>Supervisor</label>
         <select name="supervisor_id">
             @foreach($supervisors as $sup)
-                <option value="{{ $sup->id }}">{{ $sup->user->name }}</option>
+                <option value="{{ $sup->id }}">{{ $sup->user->name ?? 'N/A' }}</option>
             @endforeach
         </select>
 

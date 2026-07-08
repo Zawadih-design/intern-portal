@@ -18,17 +18,17 @@
 
         <div>
 
-            <h3>{{ $intern->user->name }}</h3>
+            <h3>{{ $intern->user->name ?? 'N/A' }}</h3>
 
-            <p>University: {{ $intern->university->name }}</p>
+            <p>University: {{ $intern->university->name ?? 'N/A' }}</p>
 
-            <p>Department: {{ $intern->department->name }}</p>
+            <p>Department: {{ $intern->department->name ?? 'N/A' }}</p>
 
             <p>Supervisor: {{ $intern->supervisor?->user?->name ?? 'N/A' }}</p>
 
-            <p>Student No: {{ $intern->student_number }}</p>
+            <p>Student No: {{ $intern->student_number ?? 'N/A' }}</p>
 
-            <p>Status: {{ $intern->status }}</p>
+            <p>Status: {{ $intern->status ?? 'N/A' }}</p>
 
             <a href="{{ route('interns.show', $intern->id) }}">View Profile</a>
 

@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminMiddleware
+class SupervisorMiddleware
 {
     /**
      * Handle an incoming request.
@@ -26,8 +26,8 @@ class AdminMiddleware
         /** @var User $user */
         $user = Auth::user();
 
-        if (!$user->hasRole('Admin')) {
-            abort(403, 'Access denied.');
+        if (!$user->hasRole('Supervisor')) {
+            abort(403, 'Access denied. Supervisor access required.');
         }
 
         return $next($request);

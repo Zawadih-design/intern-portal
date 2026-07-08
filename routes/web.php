@@ -7,6 +7,16 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\InternController;
+use App\Http\Controllers\TaskController;
+
+
+Route::resource('tasks', TaskController::class);
+
+Route::resource(
+    'tasks',
+    TaskController::class
+)
+->middleware(['auth', 'supervisor']);
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('interns', InternController::class);

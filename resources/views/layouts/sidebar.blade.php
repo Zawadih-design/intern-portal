@@ -31,6 +31,11 @@
             Supervisors
         </a>
 
+        <a href="{{ route('tasks.index') }}"
+           class="block px-6 py-3 hover:bg-slate-700">
+            Tasks
+        </a>
+
     </nav>
 
 </aside>

@@ -47,4 +47,12 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * User has one supervisor profile.
+     */
+    public function supervisor()
+    {
+        return $this->hasOne(Supervisor::class);
+    }
 }
