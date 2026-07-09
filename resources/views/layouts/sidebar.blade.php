@@ -10,6 +10,14 @@
            class="block px-6 py-3 hover:bg-slate-700">
             Dashboard
         </a>
+        
+<a href="{{ route('documents.index') }}">
+    Documents
+</a>
+        <a href="{{ route('performance.index') }}"
+           class="block px-6 py-3 hover:bg-slate-700">
+            Performance
+        </a>
 
         <a href="{{ route('interns.index') }}"
            class="block px-6 py-3 hover:bg-slate-700">
@@ -34,6 +42,11 @@
         <a href="{{ route('tasks.index') }}"
            class="block px-6 py-3 hover:bg-slate-700">
             Tasks
+        </a>
+
+        <a href="{{ route('attendance.index') }}"
+           class="block px-6 py-3 hover:bg-slate-700">
+            Attendance
         </a>
 
     </nav>

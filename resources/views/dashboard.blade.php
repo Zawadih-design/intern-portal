@@ -25,6 +25,82 @@
 
         <x-dashboard-card title="Universities" :value="$totalUniversities" />
 
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+
+
+<div class="bg-white rounded-xl shadow p-6">
+
+<p class="text-gray-500">
+Average Performance
+</p>
+
+
+<h2 class="text-3xl font-bold">
+
+{{ round($averagePerformance ?? 0) }}%
+
+</h2>
+
+</div>
+
+
+
+<div class="bg-white rounded-xl shadow p-6">
+
+<p class="text-gray-500">
+Completed Reviews
+</p>
+
+
+<h2 class="text-3xl font-bold">
+
+{{ $totalReviews }}
+
+</h2>
+
+</div>
+
+
+
+
+<div class="bg-white rounded-xl shadow p-6">
+
+<p class="text-gray-500">
+Top Performer
+</p>
+
+
+<h2 class="text-xl font-bold">
+
+{{ $highestPerformer?->intern?->user?->name ?? 'N/A' }}
+
+</h2>
+
+
+</div>
+
+
+
+
+<div class="bg-white rounded-xl shadow p-6">
+
+<p class="text-gray-500">
+Needs Attention
+</p>
+
+
+<h2 class="text-3xl font-bold text-red-600">
+
+{{ $needsAttention }}
+
+</h2>
+
+
+</div>
+
+
+</div>
+
     </div>
 
     {{-- ANALYTICS SECTION --}}

@@ -55,4 +55,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Supervisor::class);
     }
+
+public function documents()
+{
+    return $this->hasMany(Document::class);
+}
+
 }

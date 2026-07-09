@@ -18,18 +18,18 @@ class SupervisorMiddleware
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
-    {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        /** @var User $user */
-        $user = Auth::user();
-
-        if (!$user->hasRole('Supervisor')) {
-            abort(403, 'Access denied. Supervisor access required.');
-        }
-
-        return $next($request);
+{
+    if (!Auth::check()) {
+        return redirect('/login');
     }
+
+    /** @var User $user */
+    $user = Auth::user();
+
+    if (!$user->hasAnyRole(['Admin', 'Supervisor'])) {
+        abort(403, 'Access denied.');
+    }
+
+    return $next($request);
+}
 }

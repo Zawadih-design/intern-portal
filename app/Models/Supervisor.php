@@ -22,14 +22,33 @@ class Supervisor extends Model
         return $this->belongsTo(User::class);
     }
 
+    // relationship: Supervisor has many Interns
+    public function interns()
+    {
+        return $this->hasMany(Intern::class);
+    }
+
+    // Relationship: Supervisor has many Performance Reviews
+    public function performanceReviews()
+    {
+        return $this->hasMany(PerformanceReview::class);
+    }
+
+    // Relationship: Supervisor has many Attendances through Interns
+    public function attendances()
+    {
+        return $this->hasManyThrough(Attendance::class, Intern::class);
+    }
+
     // Relationship: Supervisor belongs to Department
     public function department()
     {
         return $this->belongsTo(Department::class);
     }
-// Relationship: Supervisor has many Tasks
+
+    // Relationship: Supervisor has many Tasks
     public function tasks()
-{
-    return $this->hasMany(Task::class);
-}
+    {
+        return $this->hasMany(Task::class);
+    }
 }

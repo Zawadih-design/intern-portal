@@ -45,7 +45,17 @@ class Intern extends Model
     }
 
     public function tasks()
-{
-    return $this->hasMany(Task::class);
-}
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function performanceReviews()
+    {
+        return $this->hasMany(PerformanceReview::class);
+    }
 }

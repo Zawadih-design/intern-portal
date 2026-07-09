@@ -8,8 +8,38 @@ use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\InternController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\PerformanceReviewController;
+use App\Http\Controllers\DocumentController;
 
 
+Route::resource(
+    'documents',
+    DocumentController::class
+)
+->only([
+    'index',
+    'create',
+    'store'
+]);
+
+
+Route::get(
+    'documents/{document}/download',
+    [DocumentController::class,'download']
+)
+->name('documents.download');
+
+
+Route::resource(
+    'performance',
+    PerformanceReviewController::class
+);
+
+Route::resource(
+    'attendance',
+    AttendanceController::class
+);
 Route::resource('tasks', TaskController::class);
 
 Route::resource(

@@ -2,210 +2,162 @@
 
 @section('content')
 
-<div class="max-w-7xl mx-auto py-10 px-6">
+<div class="max-w-7xl mx-auto p-6">
 
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-300 text-green-700 p-4 rounded-lg mb-6">
+            {{ session('success') }}
+        </div>
+    @endif
 
-    {{-- HEADER --}}
-    <div class="flex justify-between items-center mb-8">
+    <div class="flex justify-between items-center mb-6">
 
         <div>
-            <h1 class="text-3xl font-bold text-gray-800">
+            <h1 class="text-3xl font-bold">
                 Task Management
             </h1>
 
-            <p class="text-gray-500 mt-2">
-                Manage intern assignments and progress
+            <p class="text-gray-500">
+                Manage and monitor intern assignments
             </p>
         </div>
 
-
         <a href="{{ route('tasks.create') }}"
-           class="bg-blue-600 text-white px-5 py-3 rounded-lg shadow hover:bg-blue-700">
+           class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-lg">
 
-            + Create Task
+            + Assign Task
 
         </a>
 
     </div>
 
 
-    {{-- SUCCESS MESSAGE --}}
-    @if(session('success'))
+<li>
+    <a href="{{ route('tasks.index') }}">
+        Tasks
+    </a>
+</li>
 
-        <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-6">
+    <div class="bg-white rounded-xl shadow overflow-hidden">
 
-            {{ session('success') }}
-
-        </div>
-
-    @endif
-
-
-
-    {{-- TASK TABLE CARD --}}
-    <div class="bg-white shadow rounded-xl overflow-hidden">
-
-
-        <table class="w-full">
-
+        <table class="min-w-full">
 
             <thead class="bg-gray-100">
 
+            <tr>
 
-                <tr>
+                <th class="px-6 py-4 text-left">Title</th>
 
+                <th class="px-6 py-4 text-left">Intern</th>
 
-                    <th class="text-left p-4">
-                        Task
-                    </th>
+                <th class="px-6 py-4 text-left">Priority</th>
 
+                <th class="px-6 py-4 text-left">Status</th>
 
-                    <th class="text-left p-4">
-                        Intern
-                    </th>
+                <th class="px-6 py-4 text-left">Deadline</th>
 
-
-                    <th class="text-left p-4">
-                        Supervisor
-                    </th>
-
-
-                    <th class="text-left p-4">
-                        Priority
-                    </th>
-
-
-                    <th class="text-left p-4">
-                        Status
-                    </th>
-
-
-                    <th class="text-left p-4">
-                        Deadline
-                    </th>
-
-
-                </tr>
-
+            </tr>
 
             </thead>
 
-
             <tbody>
 
+            @forelse($tasks as $task)
 
-                @foreach($tasks as $task)
+                <tr class="border-b hover:bg-gray-50">
 
+                    <td class="px-6 py-4 font-semibold">
 
-                    <tr class="border-t">
+                        {{ $task->title }}
 
+                    </td>
 
-                        <td class="p-4">
+                    <td class="px-6 py-4">
 
-                            <div class="font-semibold">
+                        {{ $task->intern->user->name }}
 
-                                {{ $task->title }}
+                    </td>
 
-                            </div>
+                    <td class="px-6 py-4">
 
+                        @switch($task->priority)
 
-                            <p class="text-sm text-gray-500">
+                            @case('High')
 
-                                {{ Str::limit($task->description,50) }}
-
-                            </p>
-
-                        </td>
-
-
-                        <td class="p-4">
-
-                            {{ $task->intern->user->name ?? 'N/A' }}
-
-                        </td>
-
-
-                        <td class="p-4">
-
-                            {{ $task->supervisor->user->name ?? 'N/A' }}
-
-                        </td>
-
-
-                        <td class="p-4">
-
-
-                            @if($task->priority == 'High')
-
-                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm">
-
+                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full">
                                     High
-
                                 </span>
 
+                            @break
 
-                            @elseif($task->priority == 'Medium')
+                            @case('Medium')
 
-
-                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm">
-
+                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
                                     Medium
-
                                 </span>
 
+                            @break
 
-                            @else
+                            @default
 
-
-                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
-
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
                                     Low
-
                                 </span>
 
+                        @endswitch
 
-                            @endif
+                    </td>
 
+                    <td class="px-6 py-4">
 
-                        </td>
+                        @php
 
+                            $colors = [
+                                'Pending'=>'bg-gray-100 text-gray-700',
+                                'In Progress'=>'bg-blue-100 text-blue-700',
+                                'Submitted'=>'bg-yellow-100 text-yellow-700',
+                                'Approved'=>'bg-purple-100 text-purple-700',
+                                'Completed'=>'bg-green-100 text-green-700'
+                            ];
 
-                        <td class="p-4">
+                        @endphp
 
+                        <span class="px-3 py-1 rounded-full {{ $colors[$task->status] }}">
 
-                            <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">
+                            {{ $task->status }}
 
-                                {{ $task->status }}
+                        </span>
 
-                            </span>
+                    </td>
 
+                    <td class="px-6 py-4">
 
-                        </td>
+                        {{ \Carbon\Carbon::parse($task->deadline)->format('d M Y') }}
 
+                    </td>
 
-                        <td class="p-4">
+                </tr>
 
-                            {{ $task->deadline }}
+            @empty
 
-                        </td>
+                <tr>
 
+                    <td colspan="5" class="text-center p-10 text-gray-500">
 
-                    </tr>
+                        No tasks found.
 
+                    </td>
 
-                @endforeach
+                </tr>
 
+            @endforelse
 
             </tbody>
 
-
         </table>
-
 
     </div>
 
-
 </div>
-
 
 @endsection
