@@ -1,7 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
-
 <div class="space-y-6">
 
     {{-- PAGE HEADER --}}
@@ -15,91 +14,40 @@
     </div>
 
     {{-- STATS GRID --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        <x-dashboard-card title="Total Interns" :value="$totalInterns" />
+        <x-stat-card title="Interns" :value="$totalInterns"/>
 
-        <x-dashboard-card title="Departments" :value="$totalDepartments" />
+        <x-stat-card title="Departments" :value="$totalDepartments"/>
 
-        <x-dashboard-card title="Supervisors" :value="$totalSupervisors" />
+        <x-stat-card title="Supervisors" :value="$totalSupervisors"/>
 
-        <x-dashboard-card title="Universities" :value="$totalUniversities" />
+        <x-stat-card title="Universities" :value="$totalUniversities"/>
 
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+    </div>
 
+    {{-- METRICS --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-<div class="bg-white rounded-xl shadow p-6">
+        <div class="bg-white rounded-xl shadow p-6">
+            <p class="text-gray-500">Average Performance</p>
+            <h2 class="text-3xl font-bold">{{ round($averagePerformance ?? 0) }}%</h2>
+        </div>
 
-<p class="text-gray-500">
-Average Performance
-</p>
+        <div class="bg-white rounded-xl shadow p-6">
+            <p class="text-gray-500">Completed Reviews</p>
+            <h2 class="text-3xl font-bold">{{ $totalReviews }}</h2>
+        </div>
 
+        <div class="bg-white rounded-xl shadow p-6">
+            <p class="text-gray-500">Top Performer</p>
+            <h2 class="text-xl font-bold">{{ $highestPerformer?->intern?->user?->name ?? 'N/A' }}</h2>
+        </div>
 
-<h2 class="text-3xl font-bold">
-
-{{ round($averagePerformance ?? 0) }}%
-
-</h2>
-
-</div>
-
-
-
-<div class="bg-white rounded-xl shadow p-6">
-
-<p class="text-gray-500">
-Completed Reviews
-</p>
-
-
-<h2 class="text-3xl font-bold">
-
-{{ $totalReviews }}
-
-</h2>
-
-</div>
-
-
-
-
-<div class="bg-white rounded-xl shadow p-6">
-
-<p class="text-gray-500">
-Top Performer
-</p>
-
-
-<h2 class="text-xl font-bold">
-
-{{ $highestPerformer?->intern?->user?->name ?? 'N/A' }}
-
-</h2>
-
-
-</div>
-
-
-
-
-<div class="bg-white rounded-xl shadow p-6">
-
-<p class="text-gray-500">
-Needs Attention
-</p>
-
-
-<h2 class="text-3xl font-bold text-red-600">
-
-{{ $needsAttention }}
-
-</h2>
-
-
-</div>
-
-
-</div>
+        <div class="bg-white rounded-xl shadow p-6">
+            <p class="text-gray-500">Needs Attention</p>
+            <h2 class="text-3xl font-bold text-red-600">{{ $needsAttention }}</h2>
+        </div>
 
     </div>
 
@@ -110,7 +58,7 @@ Needs Attention
             Interns per Department
         </h2>
 
-        <canvas id="departmentChart" 
+        <canvas id="departmentChart"
             data-labels="{{ json_encode($departments->pluck('name')) }}"
             data-values="{{ json_encode($departments->pluck('interns_count')) }}">
         </canvas>
@@ -133,90 +81,61 @@ Needs Attention
 
         </div>
 
-        {{-- QUICK ACTIONS --}}
-        <div class="bg-white rounded-xl shadow p-6">
+        {{-- QUICK ACTIONS & RECENT ACTIVITY --}}
+        <div class="space-y-6">
 
-            <h2 class="text-lg font-semibold mb-4">
-                Quick Actions
-            </h2>
+            <div class="bg-white rounded-xl shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
 
-            <div class="space-y-3">
+                <div class="space-y-3">
+                    <a href="{{ route('interns.create') }}"
+                       class="block bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700">
+                        Add Intern
+                    </a>
 
-                <a href="{{ route('interns.create') }}"
-                   class="block bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700">
-                    Add Intern
-                </a>
+                    <a href="{{ route('departments.create') }}"
+                       class="block bg-gray-800 text-white text-center py-2 rounded-lg hover:bg-gray-900">
+                        Add Department
+                    </a>
 
-                <a href="{{ route('departments.create') }}"
-                   class="block bg-gray-800 text-white text-center py-2 rounded-lg hover:bg-gray-900">
-                    Add Department
-                </a>
-
-                <a href="{{ route('supervisors.create') }}"
-                   class="block bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700">
-                    Add Supervisor
-                </a>
-
+                    <a href="{{ route('supervisors.create') }}"
+                       class="block bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700">
+                        Add Supervisor
+                    </a>
+                </div>
             </div>
-<div class="bg-white rounded-xl shadow p-6">
 
-<h2 class="text-lg font-semibold mb-4">
-Recent Activity
-</h2>
+            <div class="bg-white rounded-xl shadow p-6">
+                <h2 class="text-lg font-semibold mb-4">Recent Activity</h2>
 
+                <div class="space-y-4">
+                    @forelse($recentActivities as $activity)
+                    <div class="flex items-start gap-3">
+                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
 
-<div class="space-y-4">
+                        <div>
+                            <p class="text-sm text-gray-800">{{ $activity->description }}</p>
+                            <p class="text-xs text-gray-400">{{ $activity->created_at->diffForHumans() }}</p>
+                        </div>
+                    </div>
+                    @empty
+                    <p class="text-gray-400">No activity yet</p>
+                    @endforelse
+                </div>
+            </div>
 
-
-@forelse($recentActivities as $activity)
-
-<div class="flex items-start gap-3">
-
-<div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-
-
-<div>
-
-<p class="text-sm text-gray-800">
-{{ $activity->description }}
-</p>
-
-
-<p class="text-xs text-gray-400">
-{{ $activity->created_at->diffForHumans() }}
-</p>
-
-
-</div>
-
-</div>
-
-
-@empty
-
-<p class="text-gray-400">
-No activity yet
-</p>
-
-@endforelse
-
-
-</div>
-
-</div>
         </div>
 
     </div>
 
 </div>
 
-@endsection
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const canvas = document.getElementById('departmentChart');
         const ctx = canvas.getContext('2d');
-        
+
         const labels = JSON.parse(canvas.dataset.labels);
         const values = JSON.parse(canvas.dataset.values);
 
@@ -241,3 +160,5 @@ No activity yet
         });
     });
 </script>
+
+@endsection

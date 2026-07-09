@@ -122,3 +122,23 @@
         </div>
     </div>
 </nav>
+
+<header class="h-20 bg-white border-b flex items-center justify-between px-8 shadow-sm">
+    <div>
+        <input type="text" placeholder="Search..." class="w-96 border rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-orange-500">
+    </div>
+
+    <div class="flex items-center gap-6">
+        <button class="relative">
+            🔔
+            <span class="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                3
+            </span>
+        </button>
+
+        <div class="text-right">
+            <div class="font-semibold">{{ Auth::user()->name }}</div>
+            <div class="text-sm text-gray-500">Administrator</div>
+        </div>
+    </div>
+</header>

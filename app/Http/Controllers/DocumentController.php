@@ -101,13 +101,8 @@ class DocumentController extends Controller
 
 
         return redirect()
-
             ->route('documents.index')
-
-            ->with(
-                'success',
-                'Document uploaded successfully'
-            );
+            ->with('success', 'Document uploaded successfully');
 
     }
 
@@ -119,15 +114,16 @@ class DocumentController extends Controller
      */
     public function download(Document $document)
     {
-        $filePath = storage_path('app/public/' . $document->file_path);
 
-        if (!file_exists($filePath)) {
-            abort(404, 'Document not found');
+        $filePath = $document->file_path;
+
+        if (!Storage::disk('public')->exists($filePath)) {
+            abort(404);
         }
 
-        $fileName = $document->title . '.' . pathinfo($document->file_path, PATHINFO_EXTENSION);
+        $fullPath = storage_path('app/public/' . $filePath);
 
-        return response()->download($filePath, $fileName);
+        return response()->download($fullPath);
 
     }
 

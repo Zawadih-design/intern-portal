@@ -11,6 +11,23 @@ use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\PerformanceReviewController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ReportController;
+
+Route::prefix('reports')->group(function () {
+
+    Route::get('/', [ReportController::class, 'index'])
+        ->name('reports.index');
+
+    Route::get('/interns', [ReportController::class, 'interns'])
+        ->name('reports.interns');
+
+    Route::get('/attendance', [ReportController::class, 'attendance'])
+        ->name('reports.attendance');
+
+    Route::get('/performance', [ReportController::class, 'performance'])
+        ->name('reports.performance');
+
+});
 
 
 Route::resource(

@@ -29,22 +29,16 @@
                 </header>
             @endisset
 
-           <!-- Page Content -->
-<div class="flex">
+            <!-- Page Content -->
+            <div class="flex">
+                {{-- Sidebar --}}
+                @include('layouts.sidebar')
 
-    {{-- Sidebar --}}
-    @include('layouts.sidebar')
-
-    {{-- Main Content --}}
-    <main class="flex-1 p-8 bg-gray-100 min-h-screen">
-
-        {{ $slot ?? '' }}
-
-        @yield('content')
-
-    </main>
-
-</div>
+                {{-- Main Content --}}
+                <main class="flex-1 p-8 bg-gray-100 min-h-screen">
+                    @yield('content')
+                </main>
+            </div>
         </div>
     </body>
 </html>
