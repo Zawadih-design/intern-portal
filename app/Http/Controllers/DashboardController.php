@@ -40,6 +40,8 @@ $departments = Department::withCount('interns')->get();
             'totalUniversities' => University::count(),
             'totalSupervisors' => Supervisor::count(),
             'departments' => $departments,
+            'departmentLabels' => $departments->pluck('name'),
+            'departmentValues' => $departments->pluck('interns_count'),
             'recentActivities' => ActivityLog::latest()
                 ->take(5)
                 ->get(),

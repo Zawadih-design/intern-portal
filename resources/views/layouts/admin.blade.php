@@ -22,7 +22,9 @@
 
 </head>
 
-<body class="bg-slate-50 text-slate-900">
+<body 
+x-data="{sidebarOpen:true}"
+class="bg-slate-100">
 
 <div class="flex h-screen overflow-hidden">
 
@@ -31,12 +33,12 @@
     @include('layouts.sidebar')
 
 
-    <div class="flex flex-col flex-1">
+    <div class="flex flex-col flex-1 min-w-0">
 
         @include('layouts.navigation')
 
 
-        <main class="p-8 overflow-y-auto">
+        <main class="flex-1 p-8 overflow-y-auto w-full">
 
             @yield('content')
 

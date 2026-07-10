@@ -15,7 +15,7 @@ export default {
                 primary: '#0F172A',
                 secondary: '#334155',
                 accent: '#F97316',
-                background: '#F8FAFC',
+                background: '#c9ddf1',
                 card: '#FFFFFF',
             },
             fontFamily: {

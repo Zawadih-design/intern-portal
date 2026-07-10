@@ -1,14 +1,37 @@
-<aside class="w-72 bg-slate-900 text-white flex flex-col shadow-2xl">
+<aside
 
-    <div class="h-20 flex items-center justify-center border-b border-slate-700">
-        <div class="text-center">
-            <h1 class="text-3xl font-black tracking-widest">
+x-show="sidebarOpen"
+
+x-transition
+
+class="w-72 bg-slate-900 text-white flex flex-col shadow-2xl fixed lg:static h-full z-50">
+
+
+    <div class="h-28 flex flex-col items-center justify-center border-b border-slate-700">
+
+        <div class="flex items-center gap-3">
+
+            <img
+            src="{{ asset('images/zesco-logo.png') }}"
+            class="w-9 h-9 rounded-full object-cover"
+            alt="ZESCO Logo">
+
+
+            <h1 class="text-3xl font-black tracking-wider text-white">
                 ZESCO
             </h1>
-            <p class="text-xs text-orange-400">
-                INTERN MANAGEMENT SYSTEM
-            </p>
+
         </div>
+
+
+        <div class="w-16 h-[2px] bg-green-600 mt-2 mb-1"></div>
+
+
+        <p class="text-[10px] tracking-widest text-orange-400">
+            INTERN MANAGEMENT SYSTEM
+        </p>
+
+
     </div>
 
     <nav class="flex-1 px-5 py-6 space-y-2">
@@ -73,9 +96,16 @@
         </a>
     </nav>
 
-    <div class="p-5 border-t border-slate-700">
-        <div class="text-sm">{{ Auth::user()->name }}</div>
-        <div class="text-xs text-slate-400">Administrator</div>
+    <div class="px-6 py-5 border-t border-slate-700">
+        <div class="font-semibold text-white">
+            {{ Auth::user()->name }}
+        </div>
+        <div class="text-sm text-slate-400">
+            Administrator
+        </div>
+        <div class="mt-3 text-xs text-slate-500">
+            © {{ date('Y') }} ZESCO PLC
+        </div>
     </div>
 
 </aside>

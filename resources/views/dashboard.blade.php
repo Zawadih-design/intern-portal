@@ -1,128 +1,121 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="space-y-6">
 
-    {{-- PAGE HEADER --}}
+<div class="w-full space-y-8">
+
     <div>
-        <h1 class="text-3xl font-bold text-gray-800">
-            Dashboard
+
+        <h1 class="text-4xl font-bold text-slate-900">
+
+            Good {{ now()->hour < 12 ? 'Morning' : (now()->hour < 17 ? 'Afternoon' : 'Evening') }},
+
+            {{ Auth::user()->name }}
+
         </h1>
-        <p class="text-gray-500 mt-1">
-            Intern Lifecycle Management Overview
+
+        <p class="text-slate-500 mt-2">
+
+            Welcome back. Here's what's happening across the internship programme.
+
         </p>
-    </div>
-
-    {{-- STATS GRID --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-
-        <x-stat-card title="Interns" :value="$totalInterns"/>
-
-        <x-stat-card title="Departments" :value="$totalDepartments"/>
-
-        <x-stat-card title="Supervisors" :value="$totalSupervisors"/>
-
-        <x-stat-card title="Universities" :value="$totalUniversities"/>
 
     </div>
 
-    {{-- METRICS --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div>
 
-        <div class="bg-white rounded-xl shadow p-6">
-            <p class="text-gray-500">Average Performance</p>
-            <h2 class="text-3xl font-bold">{{ round($averagePerformance ?? 0) }}%</h2>
-        </div>
+        <h1 class="text-3xl font-bold text-gray-800">
 
-        <div class="bg-white rounded-xl shadow p-6">
-            <p class="text-gray-500">Completed Reviews</p>
-            <h2 class="text-3xl font-bold">{{ $totalReviews }}</h2>
-        </div>
+            Dashboard
 
-        <div class="bg-white rounded-xl shadow p-6">
-            <p class="text-gray-500">Top Performer</p>
-            <h2 class="text-xl font-bold">{{ $highestPerformer?->intern?->user?->name ?? 'N/A' }}</h2>
-        </div>
+        </h1>
 
-        <div class="bg-white rounded-xl shadow p-6">
-            <p class="text-gray-500">Needs Attention</p>
-            <h2 class="text-3xl font-bold text-red-600">{{ $needsAttention }}</h2>
-        </div>
+        <p class="text-gray-500 mt-1">
+
+            Intern Lifecycle Management Overview
+
+        </p>
 
     </div>
 
-    {{-- ANALYTICS SECTION --}}
-    <div class="bg-white rounded-xl shadow p-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
 
-        <h2 class="text-lg font-semibold mb-4">
-            Interns per Department
-        </h2>
+        <x-kpi-card
+        title="Interns"
+        :value="$totalInterns">
 
-        <canvas id="departmentChart"
-            data-labels="{{ json_encode($departments->pluck('name')) }}"
-            data-values="{{ json_encode($departments->pluck('interns_count')) }}">
-        </canvas>
+        <x-icons.users class="w-8 h-8 text-orange-500"/>
+
+        </x-kpi-card>
+
+        <x-kpi-card
+        title="Departments"
+        :value="$totalDepartments">
+
+        <x-icons.building class="w-8 h-8 text-orange-500"/>
+
+        </x-kpi-card>
+
+        <x-kpi-card
+        title="Supervisors"
+        :value="$totalSupervisors">
+
+        <x-icons.academic class="w-8 h-8 text-orange-500"/>
+
+        </x-kpi-card>
+
+        <x-kpi-card
+        title="Universities"
+        :value="$totalUniversities">
+
+        <x-icons.chart class="w-8 h-8 text-orange-500"/>
+
+        </x-kpi-card>
 
     </div>
 
-    {{-- LOWER SECTION --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
 
-        {{-- RECENT INTERNS --}}
-        <div class="lg:col-span-2 bg-white rounded-xl shadow p-6">
+        <div class="bg-white rounded-2xl shadow-md p-6 h-[330px]">
 
-            <h2 class="text-lg font-semibold mb-4">
-                Recent Interns
+            <h2 class="text-lg font-semibold text-slate-800 mb-4">
+
+                Intern Performance
+
             </h2>
 
-            <p class="text-gray-400">
-                We will load latest interns here next step
-            </p>
+            <canvas id="performanceChart"></canvas>
 
         </div>
 
-        {{-- QUICK ACTIONS & RECENT ACTIVITY --}}
-        <div class="space-y-6">
+        <div class="bg-white rounded-2xl shadow-md p-6 h-[330px]">
 
-            <div class="bg-white rounded-xl shadow p-6">
-                <h2 class="text-lg font-semibold mb-4">Quick Actions</h2>
+            <h2 class="text-lg font-semibold text-slate-800 mb-4">
 
-                <div class="space-y-3">
-                    <a href="{{ route('interns.create') }}"
-                       class="block bg-blue-600 text-white text-center py-2 rounded-lg hover:bg-blue-700">
-                        Add Intern
-                    </a>
+                Department Distribution
 
-                    <a href="{{ route('departments.create') }}"
-                       class="block bg-gray-800 text-white text-center py-2 rounded-lg hover:bg-gray-900">
-                        Add Department
-                    </a>
+            </h2>
 
-                    <a href="{{ route('supervisors.create') }}"
-                       class="block bg-green-600 text-white text-center py-2 rounded-lg hover:bg-green-700">
-                        Add Supervisor
-                    </a>
-                </div>
-            </div>
+            <canvas id="departmentChart"
+                data-labels="{{ json_encode($departmentLabels) }}"
+                data-values="{{ json_encode($departmentValues) }}"></canvas>
 
-            <div class="bg-white rounded-xl shadow p-6">
-                <h2 class="text-lg font-semibold mb-4">Recent Activity</h2>
+        </div>
 
-                <div class="space-y-4">
-                    @forelse($recentActivities as $activity)
-                    <div class="flex items-start gap-3">
-                        <div class="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
+    </div>
 
-                        <div>
-                            <p class="text-sm text-gray-800">{{ $activity->description }}</p>
-                            <p class="text-xs text-gray-400">{{ $activity->created_at->diffForHumans() }}</p>
-                        </div>
-                    </div>
-                    @empty
-                    <p class="text-gray-400">No activity yet</p>
-                    @endforelse
-                </div>
-            </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
+
+        <div class="lg:col-span-2">
+
+            <x-activity-card
+            :activities="$recentActivities"/>
+
+        </div>
+
+        <div>
+
+            <x-quick-actions/>
 
         </div>
 
@@ -133,31 +126,87 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const canvas = document.getElementById('departmentChart');
-        const ctx = canvas.getContext('2d');
+        const corporateColors = [
+            "#0F172A",
+            "#334155",
+            "#475569",
+            "#64748B",
+            "#94A3B8",
+            "#CBD5E1"
+        ];
 
-        const labels = JSON.parse(canvas.dataset.labels);
-        const values = JSON.parse(canvas.dataset.values);
-
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Interns',
-                    data: values,
-                    backgroundColor: '#3b82f6'
-                }]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
+        // Performance Chart (Doughnut)
+        const perfCanvas = document.getElementById('performanceChart');
+        if (perfCanvas) {
+            const perfCtx = perfCanvas.getContext('2d');
+            new Chart(perfCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Excellent', 'Good', 'Average', 'Needs Attention'],
+                    datasets: [{
+                        data: [35, 40, 20, 5],
+                        backgroundColor: corporateColors,
+                        borderWidth: 0,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
                     }
                 }
-            }
-        });
+            });
+        }
+
+        // Department Chart (Bar)
+        const deptCanvas = document.getElementById('departmentChart');
+        if (deptCanvas) {
+            const deptCtx = deptCanvas.getContext('2d');
+            const labels = JSON.parse(deptCanvas.dataset.labels || '[]');
+            const values = JSON.parse(deptCanvas.dataset.values || '[]');
+
+            new Chart(deptCtx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Interns',
+                        data: values,
+                        backgroundColor: "#0F172A",
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            grid: {
+                                color: "#E2E8F0"
+                            },
+                            beginAtZero: true
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
     });
 </script>
 

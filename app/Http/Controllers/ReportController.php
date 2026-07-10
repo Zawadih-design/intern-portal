@@ -10,7 +10,17 @@ class ReportController extends Controller
 {
     public function index()
     {
-        return view('reports.index');
+        $totalInterns = \App\Models\Intern::count();
+        $attendanceCount = \App\Models\Attendance::count();
+        $documentCount = \App\Models\Document::count();
+        $reviewCount = \App\Models\PerformanceReview::count();
+
+        return view('reports.index', compact(
+            'totalInterns',
+            'attendanceCount',
+            'documentCount',
+            'reviewCount'
+        ));
     }
 
     public function interns()
